@@ -1,13 +1,23 @@
 import { Router } from "express";
-import videogamesManager from "../dao/mongo/managers/videogamesManager.js";
+import videogameManager from "../dao/mongo/managers/videogameManager.js";
+import { getValidFilters } from "../utils.js";
 
 const router = Router();
-const videogamesService = new videogamesManager();
+const videogameService = new videogameManager();
 
 router.get("/", async(req, res)=>{
-    const videogames = await videogamesService.getVideogames();
+    let {page=1, limit=2, ...filters} = req.query;
+    const cleanFilters = getValidFilters(filters, "videogame")
+    console.log(cleanFilters);
+    const pagination = await videogameService.paginateVideogames(cleanFilters, {page,lean:true, limit});
     res.render("Home",{
-        videogames
+        css: "Home",
+        videogame: pagination.docs,
+        hasNextPage: pagination.hasNextPage,
+        hasPrevPage: pagination.hasPrevPage,
+        nextPage: pagination.nextPage,
+        prevPage: pagination.prevPage,
+        page: pagination.page
     })
 })
 

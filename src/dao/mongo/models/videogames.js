@@ -1,21 +1,28 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const collection = "Videogames";
 
-const schema = new mongoose.Schema ({
-    title: {
+const schema = new mongoose.Schema({
+    title:{
         type:String,
-        index: true
+        required:true
     },
-    gender:String,
-    price: Number,
-    juegos: [
-        {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: "Juegos"
-        }
-    ]
+    gender: {
+        type: String,
+        required: true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    price:{
+        type:Number,
+        required:true
+    }
 },{timestamps:true})
+
+schema.plugin(mongoosePaginate);
 
 const videogameModel = mongoose.model(collection,schema);
 

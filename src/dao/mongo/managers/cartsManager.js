@@ -10,8 +10,12 @@ export default class cartsManager {
         return typesModel.findOne(params).lean();
     }
 
-    createCarts = (videogame) => {
-        return typesModel.create(videogame);
+    //if(optiions.populate){
+        //return typesModel.findOne(params).populate("videogames.videogame");
+    //}
+
+    createCarts = () => {
+        return typesModel.create({videogames:[]});
     }
 
     updateCarts = (id, videogame) => {
