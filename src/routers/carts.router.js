@@ -30,6 +30,8 @@ router.put("/cid/videogames/:vid", async(req,res) =>{
     if (gameExist) return res.status(400).send({status:"error",error:"El juego ya existe"});
     getcarts.videogames.push({
         videogame:vid,
+        title: String,
+        gender: String,
         description: String
     })
     await cartsService.updateCarts(cid,{videogames:getcarts.videogames});

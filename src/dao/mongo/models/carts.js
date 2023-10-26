@@ -8,6 +8,8 @@ const videogameSubSchema = new mongoose.Schema({
         ref:"Videogames"
     },
     quantity: Number,
+    title: String,
+    gender: String,
     description:String
 },{_id:false})
 
