@@ -24,20 +24,20 @@ app.set("view engine", "handlebars");
 
 //app.get("/", (req, res)=> {
 //    const {accepted} = req.query;
-  //  if (accepted) {
-    //    res
-//    .cookie("cookievid", {title:"Arena of Valor", gender:"action"},{signed:true}).send({static:"success", payload: "Usuario"})
-//    .cookie("cookieRIP", {name:"gaby", lastname:"lopez"}, {maxAge:5000})
+//    if (accepted) {
+ //       res
+//  .cookie("cookievid", {title:"Arena of Valor", gender:"action"},{signed:true}).send({static:"success", payload: "Usuario"})
+ //   .cookie("cookieRIP", {name:"gaby", lastname:"lopez"}, {maxAge:5000})
 //}
-//    else{
+ //   else{
   //      res.send({error:"No puedes seguir en la página"})
-    //}
+//    }
 //});
 
-app.get("/getCookie",(req, res) => {
-    console.log(req.cookies);
-    res.send(`Hola, ${req.cookies?.cookievid?.name}`)
-})
+//app.get("/getCookie",(req, res) => {
+//    console.log(req.cookies);
+//    res.send(`Hola, ${req.cookies?.cookievid?.name}`)
+//})
 
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());

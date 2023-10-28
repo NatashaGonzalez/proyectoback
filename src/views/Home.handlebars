@@ -1,13 +1,14 @@
 <h1>Play!</h1>
 
+<h2>Productos</h2>
+
 <div>
     {{#each videogames}}
     <div>
         <p class="title">{{this.title}}</p>
-        <p class="price">{{this.price}}</p>
-        <img src={{this.images}}>
+        <p class="gender">{{this.gender}}</p>
         <p class="description">{{this.description}}</p>
-        <br/>
+        <p class="price">{{this.price}}</p>
     </div>
     {{/each}}
     <button onclick="addvideoGame("{{this._id}}")">agregar</button>

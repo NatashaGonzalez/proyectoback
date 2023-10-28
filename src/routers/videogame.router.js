@@ -1,6 +1,5 @@
 import { Router } from "express";
 import videogameManager from "../dao/mongo/managers/videogameManager.js";
-import uploader from "../service/uploadService.js";
 import videogameModel from "../dao/mongo/models/videogames.js";
 
 const router = Router();
@@ -17,31 +16,35 @@ router.get("/indexacion", async (req,res) => {
     res.sendStatus(200);
 })
 
-router.post("/", uploader.array("images"), async(req, res) => {
-    console.log(req.files);
-    console.log(req.body);
-    const {
-        title,
-        category,
-        gender,
-        price
-    } = req.body;
-
-    if (!title || !gender || !category || !price) return res.status(400).send({status:"error", error:"incomplete values"});
-
-    const newVideogame = {
-        title,
-        category,
-        gender,
-        price
-    }
-    const images = req.files.map(file => `${req.protocol}://${req.hostname}:${process.env.PORT || 8080}/img/${file.filename}`);
-    newVideogame.images = images
-
-    const result = await videogameService.createVideogame(newVideogame);
-    
-    res.send({status: "success", payload:result._id});
+router.post("/", async (req, res) => {
+    const result = await videogameService.createVideogame();
+    res.send({status: "success", payload:result._id})
 })
+
+//router.post("/", async(req, res) => {
+  //  console.log(req.body);
+//    const {
+  //      title,
+    //    category,
+//        gender,
+  //      price
+    //} = req.body;
+
+  //  if (!title || !gender || !category || !price) return res.status(400).send({status:"error", error:"incomplete values"});
+
+    //const newVideogame = {
+//        title,
+  //      category,
+    //    gender,
+      //  price
+    //}
+    //const images = req.files.map(file => `${req.protocol}://${req.hostname}:${process.env.PORT || 8080}/img/${file.filename}`);
+    //newVideogame.images = images
+
+//    const result = await videogameService.createVideogame(newVideogame);
+    
+  //  res.send({status: "success", payload:result._id});
+//})
 
 router.put("/:vid", async(req,res) => {
     const {vid} = req.params;
