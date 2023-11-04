@@ -1,16 +1,16 @@
 import { Router } from "express";
+import { getValidFilters } from "../utils.js";
 import videogameManager from "../dao/mongo/managers/videogameManager.js";
-//import { getValidFilters } from "../utils.js";
-import cartsManager from "../dao/mongo/managers/cartsManager.js";
 
 const router = Router();
-const cartsService = new cartsManager();
+const videogameService = new videogameManager();
 
 router.get("/", async(req, res)=>{
-    let {page=1, limit=2,} = req.query;
-    //const cleanFilters = getValidFilters(filters, "videogame")
-    //console.log(cleanFilters);
-    const pagination = await cartsService.getcarts({}, {page,lean:true, limit});
+    let {page=1, limit=2, ...filters} = req.query;
+    const cleanFilters = getValidFilters(filters, "videogame")
+    console.log(cleanFilters);
+    const pagination = await videogameService.getvideogame(cleanFilters, {page,lean:true, limit});
+    console.log("Datos de videojuegos recuperados:", pagination.docs);
     res.render("Home",{
         css: "Home",
         videogames: pagination.docs,

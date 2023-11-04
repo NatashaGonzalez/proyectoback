@@ -5,7 +5,7 @@ const collection = "Videogamestypes";
 const videogameSubSchema = new mongoose.Schema({
     videogame: {
         type: mongoose.SchemaTypes.ObjectId,
-        ref:"Videogames"
+        ref:"videogames"
     },
     quantity: Number,
     title: String,

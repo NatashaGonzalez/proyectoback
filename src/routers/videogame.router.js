@@ -1,6 +1,5 @@
 import { Router } from "express";
 import videogameManager from "../dao/mongo/managers/videogameManager.js";
-import videogameModel from "../dao/mongo/models/videogames.js";
 
 const router = Router();
 const videogameService = new videogameManager();
@@ -11,33 +10,22 @@ router.get("/", async(req, res) => {
 })
 
 router.get("/indexacion", async (req,res) => {
-    const ind = await videogameModel.find({title:"Brawl Stars"}).explain("executionStats");
+    const ind = await videogameService.getvideogame({title:"Brawl Stars"}).explain("executionStats");
     console.log(ind);
     res.sendStatus(200);
 })
 
 router.post("/", async (req, res) => {
-    const result = await videogameService.createVideogame();
-    res.send({status: "success", payload:result._id})
-})
+    const newVideogameData = req.body;
+    try {
+        const result = await videogameService.createVideogame(newVideogameData);
+        res.status(201).json({ status: "success", payload: result._id });
+    } catch (error) {
+        console.error("Error al crear el producto:", error);
+        res.status(500).json({ status: "error", message: "Error al crear el producto" });
+    }
+});
 
-//router.post("/", async(req, res) => {
-  //  console.log(req.body);
-//    const {
-  //      title,
-    //    category,
-//        gender,
-  //      price
-    //} = req.body;
-
-  //  if (!title || !gender || !category || !price) return res.status(400).send({status:"error", error:"incomplete values"});
-
-    //const newVideogame = {
-//        title,
-  //      category,
-    //    gender,
-      //  price
-    //}
     //const images = req.files.map(file => `${req.protocol}://${req.hostname}:${process.env.PORT || 8080}/img/${file.filename}`);
     //newVideogame.images = images
 
